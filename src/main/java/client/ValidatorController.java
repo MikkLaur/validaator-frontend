@@ -6,12 +6,18 @@ import javafx.scene.control.*;
 
 public class ValidatorController {
 
+    /* TableView */
+    public TableView userHistoryTable;
+    public TableColumn ticketNrColumn;
+    public TableColumn stopNameColumn;
+    public TableColumn ticketPurchaseDateColumn;
+
+
     /* Kasutaja Loomine */
     public TextField userName;
     public TextField personal_id;
     public TextField date_of_birth;
     public Button registerUserButton;
-    public TableView userHistoryTable;
 
     public void registerUserClicked(ActionEvent actionEvent) {
         if (basicDataValidation(userName) && basicDataValidation(personal_id) && basicDataValidation(date_of_birth)) {
@@ -31,13 +37,16 @@ public class ValidatorController {
 
 
     /* ValidatorController */
-    public ComboBox selectedUser;
-    public ComboBox selectedStop;
+    public ComboBox usersComboBox;
+    public ComboBox stopsComboBox;
 
 
     public void loadTransactions(ActionEvent actionEvent) {
     }
 
+
+
+    /* Other stuff */
     private boolean basicDataValidation(TextField text) {
         return text.getText().length() != 0;
     }
