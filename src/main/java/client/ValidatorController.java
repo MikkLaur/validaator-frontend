@@ -44,6 +44,6 @@ public class ValidatorController {
 
     @FXML
     private void initialize() {
-        //populate comboboxes and shit
+        HttpClient.getAllUsers();
     }
 }
