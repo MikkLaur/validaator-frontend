@@ -18,17 +18,17 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="448.0" prefWidth="451.0">
                <children>
-                  <ComboBox fx:id="selectedUser" layoutX="14.0" layoutY="60.0" onAction="#loadTransactions" prefWidth="150.0" />
-                  <ComboBox fx:id="selectedStop" layoutX="196.0" layoutY="60.0" prefWidth="150.0" />
+                  <ComboBox fx:id="usersComboBox" layoutX="14.0" layoutY="60.0" onAction="#loadTransactions" prefWidth="150.0" />
+                  <ComboBox fx:id="stopsComboBox" layoutX="196.0" layoutY="60.0" prefWidth="150.0" />
                   <Label layoutX="196.0" layoutY="38.0" text="Peatus" />
                   <Label layoutX="14.0" layoutY="38.0" text="Kasutaja" />
                   <Button layoutX="145.0" layoutY="95.0" mnemonicParsing="false" text="Valideeri" />
                   <Label layoutX="147.0" layoutY="6.0" text="Validaator" />
                   <TableView fx:id="userHistoryTable" layoutX="13.0" layoutY="136.0" prefHeight="307.0" prefWidth="340.0">
                     <columns>
-                      <TableColumn id="tableTicketNr" prefWidth="111.0" text="Pileti nr" />
-                        <TableColumn id="tableStopName" prefWidth="115.0" text="Peatus" />
-                      <TableColumn id="tableDateOfPurchase" minWidth="0.0" prefWidth="121.0" text="Ostukuupäev" />
+                      <TableColumn id="tableTicketNr" fx:id="ticketNrColumn" prefWidth="111.0" text="Pileti nr" />
+                        <TableColumn id="tableStopName" fx:id="stopNameColumn" prefWidth="115.0" text="Peatus" />
+                      <TableColumn id="tableDateOfPurchase" fx:id="ticketPurchaseDateColumn" minWidth="0.0" prefWidth="121.0" text="Ostukuupäev" />
                     </columns>
                   </TableView>
                   <Button layoutX="327.0" layoutY="110.0" mnemonicParsing="false" text="↻">

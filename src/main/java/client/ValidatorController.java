@@ -1,10 +1,15 @@
 package client;
 
+import client.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.json.JSONArray;
+
+import java.util.List;
 
 public class ValidatorController {
+    public List<User> usersList;
 
     /* TableView */
     public TableView userHistoryTable;
@@ -53,6 +58,10 @@ public class ValidatorController {
 
     @FXML
     private void initialize() {
-        HttpClient.getAllUsers();
+        /* Query all the existing users from the Database */
+        JSONArray jsonArray = new JSONArray(HttpClient.getAllUsers());
+        User.jsonArrayToList(jsonArray);
+
+
     }
 }
