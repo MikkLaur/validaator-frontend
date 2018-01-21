@@ -1,12 +1,15 @@
 package client;
 
 import client.model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.json.JSONArray;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ValidatorController {
     public List<User> usersList;
@@ -60,8 +63,17 @@ public class ValidatorController {
     private void initialize() {
         /* Query all the existing users from the Database */
         JSONArray jsonArray = new JSONArray(HttpClient.getAllUsers());
-        User.jsonArrayToList(jsonArray);
+        List<User> users = User.jsonArrayToList(jsonArray);
+        populateUserSelectionComboBox(users);
 
 
+    }
+
+    private void populateUserSelectionComboBox(List<User> users) {
+        ObservableList userIds = FXCollections.observableArrayList(users.stream()
+                .map(User::getId)
+                .collect(Collectors.toList()));
+        usersComboBox.setItems(userIds);
+        //usersComboBox.setItems();
     }
 }
