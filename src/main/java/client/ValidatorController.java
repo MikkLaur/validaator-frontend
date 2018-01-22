@@ -47,7 +47,18 @@ public class ValidatorController {
 
     /* Valideerime */
     public void validateClicked(ActionEvent actionEvent) {
-
+        Long selectedUserId = (Long) usersComboBox.getValue();
+        String selectedStopName = (String) stopsComboBox.getValue();
+        if (selectedUserId != null && selectedStopName != null) {
+            /* Get stopId before making a http request */
+            Long selectedStopId = stopsList.stream()
+                    .filter(c -> c.getName().equals(selectedStopName))
+                    .findFirst().orElse(null)
+                    .getId();
+            //System.out.println(selectedUserId + " " + stopId);
+            HttpClient.sendValidation(selectedUserId.toString(), selectedStopId.toString());
+        }
+        //System.out.println(selectedUserId + selectedStopName);
     }
 
     /* ValidatorController */
@@ -94,7 +105,6 @@ public class ValidatorController {
 
     @FXML
     private void initialize() {
-
         populateUserSelectionComboBox(usersList);
         populateStopSelectionComboBox(stopsList);
 
