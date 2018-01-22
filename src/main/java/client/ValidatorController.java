@@ -1,5 +1,6 @@
 package client;
 
+import client.model.Stop;
 import client.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,7 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ValidatorController {
-    public List<User> usersList;
+    private List<User> usersList;
+    private List<Stop> stopsList;
 
     /* TableView */
     public TableView userHistoryTable;
@@ -59,14 +61,11 @@ public class ValidatorController {
         return text.getText().length() != 0;
     }
 
-    @FXML
-    private void initialize() {
-        /* Query all the existing users from the Database */
-        JSONArray jsonArray = new JSONArray(HttpClient.getAllUsers());
-        List<User> users = User.jsonArrayToList(jsonArray);
-        populateUserSelectionComboBox(users);
-
-
+    private void populateStopSelectionComboBox(List<Stop> stops) {
+        ObservableList stopNames = FXCollections.observableArrayList(stops.stream()
+                .map(Stop::getName)
+                .collect(Collectors.toList()));
+        stopsComboBox.setItems(stopNames);
     }
 
     private void populateUserSelectionComboBox(List<User> users) {
@@ -74,6 +73,26 @@ public class ValidatorController {
                 .map(User::getId)
                 .collect(Collectors.toList()));
         usersComboBox.setItems(userIds);
-        //usersComboBox.setItems();
+    }
+
+      //////////////////
+     /* Constructors */
+    //////////////////
+
+    public ValidatorController() {
+        /* Query all the existing users from the Database */
+        JSONArray jsonArray = new JSONArray(HttpClient.getAllUsers());
+        usersList = User.jsonArrayToList(jsonArray);
+        /* Query all existing stops from the Database */
+        jsonArray = new JSONArray(HttpClient.getAllStops());
+        stopsList = Stop.jsonArrayToList(jsonArray);
+    }
+
+    @FXML
+    private void initialize() {
+
+        populateUserSelectionComboBox(usersList);
+        populateStopSelectionComboBox(stopsList);
+
     }
 }
