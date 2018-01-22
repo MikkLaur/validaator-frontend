@@ -66,4 +66,17 @@ public class HttpClient {
         }
         return "";
     }
+
+    public static String getAllStops() {
+        Request request = new Request.Builder()
+                .url(URL.concat("/api/stops"))
+                .build();
+        try {
+            Response response = httpClient.newCall(request).execute();
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
