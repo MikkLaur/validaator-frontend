@@ -45,6 +45,10 @@ public class ValidatorController {
         }
     }
 
+    /* Valideerime */
+    public void validateClicked(ActionEvent actionEvent) {
+
+    }
 
     /* ValidatorController */
     public ComboBox usersComboBox;
