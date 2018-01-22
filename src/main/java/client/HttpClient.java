@@ -27,7 +27,9 @@ public class HttpClient {
                 .build();
         try {
             Response response = httpClient.newCall(request).execute();
-            return Long.parseLong(response.body().string());
+            long result = Long.parseLong(response.body().string());
+            response.body().close();
+            return result;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +49,9 @@ public class HttpClient {
                 .build();
         try {
             Response response = httpClient.newCall(request).execute();
-            return Long.parseLong(response.body().string());
+            long result = Long.parseLong(response.body().string());
+            response.body().close();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +64,9 @@ public class HttpClient {
                 .build();
         try {
             Response response = httpClient.newCall(request).execute();
-            return response.body().string();
+            String result = response.body().string();
+            response.body().close();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -73,10 +79,34 @@ public class HttpClient {
                 .build();
         try {
             Response response = httpClient.newCall(request).execute();
-            return response.body().string();
+            String result = response.body().string();
+            response.body().close();
+            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static void sendValidation(String userId, String stopId) {
+        String message = new JSONObject()
+                .put("user_id", userId)
+                .put("stop_id", stopId)
+                .toString();
+        RequestBody body = RequestBody.create(JSON, message);
+
+        Request request = new Request.Builder()
+                .url(URL.concat("/api/tickets"))
+                .post(body)
+                .build();
+        try {
+            Response response = httpClient.newCall(request).execute();
+            response.body().close();
+            //return Long.parseLong(response.body().string());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //return -1;
     }
 }
