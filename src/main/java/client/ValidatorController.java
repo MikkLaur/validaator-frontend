@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//TODO: Burn this piece of crap in fire
+//TODO: Set this piece of crap on fire (aka Separate the code into multiple classes)
 public class ValidatorController {
     private List<User> usersList;
     private List<Stop> stopsList;
@@ -31,7 +31,8 @@ public class ValidatorController {
 
     public void registerUserClicked(ActionEvent actionEvent) {
         if (basicDataValidation(userName) && basicDataValidation(personal_id) && basicDataValidation(date_of_birth)) {
-            HttpClient.registerUser(userName.getText(), personal_id.getText(), date_of_birth.getText());
+            long userId = HttpClient.registerUser(userName.getText(), personal_id.getText(), date_of_birth.getText());
+            if (userId != -1 ) addNewUserId(userId); /* If the registration failed, the server will respond with -1 */
         }
     }
 
@@ -42,6 +43,7 @@ public class ValidatorController {
     public void registerStopClicked(ActionEvent actionEvent) {
         if (basicDataValidation(stopName)) {
             HttpClient.registerStop(stopName.getText());
+            addNewStopName(stopName.getText());
         }
     }
 
@@ -60,7 +62,7 @@ public class ValidatorController {
             HttpClient.sendValidation(selectedUserId.toString(), selectedStopId.toString());
 
             /* Reload transaction table */
-            //TODO: update locally
+            //TODO: update locally instead of querying the server again
             loadTransactions(new ActionEvent());
         }
         //System.out.println(selectedUserId + selectedStopName);
@@ -95,18 +97,26 @@ public class ValidatorController {
         return text.getText().length() != 0;
     }
 
+    ObservableList<String> stopNames;
     private void populateStopSelectionComboBox(List<Stop> stops) {
-        ObservableList stopNames = FXCollections.observableArrayList(stops.stream()
+        stopNames = FXCollections.observableArrayList(stops.stream()
                 .map(Stop::getName)
                 .collect(Collectors.toList()));
         stopsComboBox.setItems(stopNames);
     }
+    private void addNewStopName(String name) {
+        stopNames.add(name);
+    }
 
+    ObservableList<Long> userIds;
     private void populateUserSelectionComboBox(List<User> users) {
-        ObservableList userIds = FXCollections.observableArrayList(users.stream()
+        userIds = FXCollections.observableArrayList(users.stream()
                 .map(User::getId)
                 .collect(Collectors.toList()));
         usersComboBox.setItems(userIds);
+    }
+    private void addNewUserId(long id) {
+        userIds.add(id);
     }
 
       //////////////////
@@ -114,6 +124,7 @@ public class ValidatorController {
     //////////////////
 
     public ValidatorController() {
+        //TODO: Check whether the server is up.
         /* Query all the existing users from the Database */
         JSONArray jsonArray = new JSONArray(HttpClient.getAllUsers());
         usersList = User.jsonArrayToList(jsonArray);
