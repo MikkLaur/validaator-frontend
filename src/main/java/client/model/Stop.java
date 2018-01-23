@@ -24,6 +24,7 @@ public class Stop {
         this.dateAdded = Date.valueOf(dateAdded);
     }
 
+    // TODO: Consolidate jsonArrayToList methods for Model classes
     public static List<Stop> jsonArrayToList(JSONArray jsonArray) {
         List<Stop> stops = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {
