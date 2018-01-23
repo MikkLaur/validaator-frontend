@@ -31,7 +31,7 @@
                       <TableColumn id="tableDateOfPurchase" fx:id="ticketPurchaseDateColumn" minWidth="0.0" prefWidth="121.0" text="Ostukuupäev" />
                     </columns>
                   </TableView>
-                  <Button layoutX="327.0" layoutY="110.0" mnemonicParsing="false" text="↻">
+                  <Button layoutX="327.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadTransactions" text="↻">
                      <font>
                         <Font size="11.0" />
                      </font>

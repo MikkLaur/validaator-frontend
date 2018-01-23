@@ -2,25 +2,25 @@ package client;
 
 import client.model.Stop;
 import client.model.User;
+import client.model.UserTransactionHistory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.json.JSONArray;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//TODO: Burn this piece of crap in fire
 public class ValidatorController {
     private List<User> usersList;
     private List<Stop> stopsList;
-
-    /* TableView */
-    public TableView userHistoryTable;
-    public TableColumn ticketNrColumn;
-    public TableColumn stopNameColumn;
-    public TableColumn ticketPurchaseDateColumn;
 
 
     /* Kasutaja Loomine */
@@ -46,6 +46,7 @@ public class ValidatorController {
     }
 
     /* Valideerime */
+    //TODO: Move logic out of view
     public void validateClicked(ActionEvent actionEvent) {
         Long selectedUserId = (Long) usersComboBox.getValue();
         String selectedStopName = (String) stopsComboBox.getValue();
@@ -57,16 +58,34 @@ public class ValidatorController {
                     .getId();
             //System.out.println(selectedUserId + " " + stopId);
             HttpClient.sendValidation(selectedUserId.toString(), selectedStopId.toString());
+
+            /* Reload transaction table */
+            //TODO: update locally
+            loadTransactions(new ActionEvent());
         }
         //System.out.println(selectedUserId + selectedStopName);
     }
 
     /* ValidatorController */
-    public ComboBox usersComboBox;
-    public ComboBox stopsComboBox;
+    public ComboBox<Long> usersComboBox;
+    public ComboBox<String> stopsComboBox;
 
 
+    /* User's transaction history table */
+    public TableView<UserTransactionHistory> userHistoryTable;
+    public TableColumn<UserTransactionHistory, Long> ticketNrColumn;
+    public TableColumn<UserTransactionHistory, String> stopNameColumn;
+    public TableColumn<UserTransactionHistory, Date> ticketPurchaseDateColumn;
+
+    //TODO: Move logic out of view
     public void loadTransactions(ActionEvent actionEvent) {
+        if (usersComboBox.getValue() != null) {
+            Long currentUserId = usersComboBox.getValue();
+            JSONArray jsonArray = new JSONArray(HttpClient.getUserTransactionHistory(currentUserId.toString()));
+            List<UserTransactionHistory> userTransactionHistory = UserTransactionHistory.jsonArrayToList(jsonArray);
+
+            userHistoryTable.setItems(FXCollections.observableArrayList(userTransactionHistory));
+        }
     }
 
 
@@ -105,8 +124,18 @@ public class ValidatorController {
 
     @FXML
     private void initialize() {
+        /* Assign properties to TableView Columns */
+        ticketNrColumn.setCellValueFactory(
+                new PropertyValueFactory<>("ticketNr")
+        );
+        stopNameColumn.setCellValueFactory(
+                new PropertyValueFactory<>("stopName")
+        );
+        ticketPurchaseDateColumn.setCellValueFactory(
+                new PropertyValueFactory<>("transactionDate")
+        );
+
         populateUserSelectionComboBox(usersList);
         populateStopSelectionComboBox(stopsList);
-
     }
 }
