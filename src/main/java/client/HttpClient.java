@@ -109,4 +109,20 @@ public class HttpClient {
         }
         //return -1;
     }
+
+    public static String getUserTransactionHistory(String userId) {
+        Request request = new Request.Builder()
+                .url(URL.concat("/api/user/").concat(userId).concat("/tickethistory"))
+                .build();
+        Response response = null;
+        try {
+            response = httpClient.newCall(request).execute();
+            String result = response.body().string();
+            response.body().close();
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
