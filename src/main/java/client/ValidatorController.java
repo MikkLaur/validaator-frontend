@@ -42,8 +42,8 @@ public class ValidatorController {
 
     public void registerStopClicked(ActionEvent actionEvent) {
         if (basicDataValidation(stopName)) {
-            HttpClient.registerStop(stopName.getText());
-            addNewStopName(stopName.getText());
+            long stopId = HttpClient.registerStop(stopName.getText());
+            addNewStopName(new Stop(stopId, stopName.getText()));
         }
     }
 
@@ -104,8 +104,9 @@ public class ValidatorController {
                 .collect(Collectors.toList()));
         stopsComboBox.setItems(stopNames);
     }
-    private void addNewStopName(String name) {
-        stopNames.add(name);
+    private void addNewStopName(Stop stop) {
+        stopsList.add(stop);
+        stopNames.add(stop.getName());
     }
 
     ObservableList<Long> userIds;

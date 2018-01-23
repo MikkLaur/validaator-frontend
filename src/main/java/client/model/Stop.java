@@ -24,6 +24,12 @@ public class Stop {
         this.dateAdded = Date.valueOf(dateAdded);
     }
 
+    /* Locally created stop, created when a new Stop is registered to avoid querying the DB */
+    public Stop(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     // TODO: Consolidate jsonArrayToList methods for Model classes
     public static List<Stop> jsonArrayToList(JSONArray jsonArray) {
         List<Stop> stops = new ArrayList<>();
