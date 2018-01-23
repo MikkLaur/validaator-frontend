@@ -10,7 +10,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ValidatorController">
    <children>
@@ -31,11 +30,6 @@
                       <TableColumn id="tableDateOfPurchase" fx:id="ticketPurchaseDateColumn" minWidth="0.0" prefWidth="121.0" text="Ostukuupäev" />
                     </columns>
                   </TableView>
-                  <Button layoutX="327.0" layoutY="110.0" mnemonicParsing="false" onAction="#loadTransactions" text="↻">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                  </Button>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
