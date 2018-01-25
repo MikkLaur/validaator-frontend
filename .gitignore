@@ -115,6 +115,9 @@ csx
 # Windows Store app package directory
 AppPackages/
 
+# Gradle cache folder
+.gradle/
+
 # Others
 *.Cache
 ClientBin/
