@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("validaator.fxml"));
-        primaryStage.setTitle("ValidatorController Simulaator");
+        primaryStage.setTitle("Validaator Simulaator");
         primaryStage.setScene(new Scene(root, 730, 450));
         primaryStage.setResizable(false);
         primaryStage.show();
