@@ -1,7 +1,7 @@
 package client;
 
 import com.squareup.okhttp.*;
-import org.json.JSONObject;;
+import org.json.JSONObject;
 
 import java.io.IOException;
 

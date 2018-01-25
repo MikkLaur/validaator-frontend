@@ -31,7 +31,7 @@ public class User {
         this.dateAdded = Date.valueOf(dateAdded);
     }
 
-    // TODO: Consolidate jsonArrayToList methods for Model classes
+    // TODO: Create a Controller for this Model and move this method out
     public static List<User> jsonArrayToList(JSONArray jsonArray) {
         List<User> users = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {

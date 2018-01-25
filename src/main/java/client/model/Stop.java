@@ -30,7 +30,7 @@ public class Stop {
         this.name = name;
     }
 
-    // TODO: Consolidate jsonArrayToList methods for Model classes
+    // TODO: Create a Controller for this Model and move this method out
     public static List<Stop> jsonArrayToList(JSONArray jsonArray) {
         List<Stop> stops = new ArrayList<>();
         for(int i = 0; i < jsonArray.length(); i++) {
